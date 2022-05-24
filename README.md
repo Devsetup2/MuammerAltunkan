@@ -3,7 +3,9 @@
 - 🌱 I’m currently learning ...
 - 💞️ I’m looking to collaborate on ...
 - 📫 How to reach me ...
-
+ 
 <!---
-SetupList Github Lists Projects and Free NFT Lists.
+Create By Muammer Altunkan 
+Twitter:https://twitter.com/konyacyber
+İnstagram: https://www.instagram.com/setup.dev42/ 
 --->
