@@ -1,11 +1,6 @@
-- 👋 Hi, I’m @Devsetup2
-- 👀 I’m interested in ...
-- 🌱 I’m currently learning ...
-- 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me ...
- 
-<!---
-Create By Muammer Altunkan 
-Twitter:https://twitter.com/konyacyber
-İnstagram: https://www.instagram.com/setup.dev42/ 
---->
+- 👋 Hi, I’m @Devsetup2 
+
+-Create By Muammer Altunkan 
+-Twitter: https://twitter.com/konyacyber
+-İnstagram: https://www.instagram.com/setup.dev42/ 
+
