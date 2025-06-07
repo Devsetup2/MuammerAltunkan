@@ -8,15 +8,78 @@ document.addEventListener('DOMContentLoaded', function() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const blogPostsContainer = document.getElementById('blog-posts');
     
+    // Blog verileri (JSON yerine doğrudan JS içinde)
+    const posts = [
+        {
+            id: 1,
+            title: "JavaScript'te Asenkron Programlama",
+            excerpt: "JavaScript'te callback, promise ve async/await kullanımını öğrenin.",
+            content: "Bu makalede JavaScript'te asenkron programlamanın temellerini ele alacağız...",
+            image: "https://source.unsplash.com/random/600x400/?javascript",
+            date: "15 Haziran 2023",
+            category: "JavaScript",
+            source: "https://example.com/javascript-asenkron-programlama"
+        },
+        {
+            id: 2,
+            title: "CSS Grid ile Modern Layout'lar",
+            excerpt: "CSS Grid kullanarak responsive ve modern web sayfaları oluşturun.",
+            content: "CSS Grid, web sayfalarında karmaşık layout'lar oluşturmak için güçlü bir araçtır...",
+            image: "https://source.unsplash.com/random/600x400/?css",
+            date: "10 Haziran 2023",
+            category: "CSS",
+            source: "https://example.com/css-grid-modern-layout"
+        },
+        {
+            id: 3,
+            title: "React Hooks Kullanım Rehberi",
+            excerpt: "React Hooks'ları kullanarak fonksiyonel bileşenler oluşturmayı öğrenin.",
+            content: "React Hooks, fonksiyonel bileşenlerde state ve lifecycle özelliklerini kullanmamızı sağlar...",
+            image: "https://source.unsplash.com/random/600x400/?react",
+            date: "5 Haziran 2023",
+            category: "React",
+            source: "https://example.com/react-hooks-kilavuz"
+        },
+        {
+            id: 4,
+            title: "Web Performans Optimizasyonu",
+            excerpt: "Web sitenizin yüklenme hızını artırmak için ipuçları ve teknikler.",
+            content: "Web performansı, kullanıcı deneyimini doğrudan etkileyen kritik bir faktördür...",
+            image: "https://source.unsplash.com/random/600x400/?speed",
+            date: "1 Haziran 2023",
+            category: "Performance",
+            source: "https://example.com/web-performans-optimizasyon"
+        },
+        {
+            id: 5,
+            title: "Node.js ile REST API Geliştirme",
+            excerpt: "Express.js kullanarak Node.js'de RESTful API nasıl oluşturulur?",
+            content: "Node.js, sunucu tarafında JavaScript kullanarak hızlı ve ölçeklenebilir uygulamalar oluşturmamızı sağlar...",
+            image: "https://source.unsplash.com/random/600x400/?nodejs",
+            date: "25 Mayıs 2023",
+            category: "Node.js",
+            source: "https://example.com/nodejs-rest-api"
+        },
+        {
+            id: 6,
+            title: "Git ve GitHub Kullanımı",
+            excerpt: "Versiyon kontrol sistemi Git ve GitHub kullanımına giriş.",
+            content: "Git, yazılım geliştirme süreçlerinde versiyon kontrolü için kullanılan popüler bir araçtır...",
+            image: "https://source.unsplash.com/random/600x400/?github",
+            date: "20 Mayıs 2023",
+            category: "Git",
+            source: "https://example.com/git-github-kullanim"
+        }
+    ];
+
     // State
-    let posts = [];
     let filteredPosts = [];
     let currentFilter = 'all';
     let searchQuery = '';
     
     // Initialize the app
     initTheme();
-    fetchBlogPosts();
+    initBlogPosts();
     setupEventListeners();
     
     function initTheme() {
@@ -30,23 +93,13 @@ document.addEventListener('DOMContentLoaded', function() {
         icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     }
     
-    async function fetchBlogPosts() {
-        try {
-            // Burada gerçek bir API endpoint'i kullanabilirsiniz
-            // Örnek olarak local bir JSON dosyası kullanıyorum
-            const response = await fetch('posts.json');
-            posts = await response.json();
-            
-            // Her post için favori durumunu yükle
-            posts.forEach(post => {
-                post.isFavorite = getFavoriteStatus(post.id);
-            });
-            
-            renderPosts(posts);
-        } catch (error) {
-            console.error('Error fetching blog posts:', error);
-            blogPostsContainer.innerHTML = '<div class="no-results">Gönderiler yüklenirken bir hata oluştu.</div>';
-        }
+    function initBlogPosts() {
+        // Her post için favori durumunu yükle
+        posts.forEach(post => {
+            post.isFavorite = getFavoriteStatus(post.id);
+        });
+        
+        renderPosts(posts);
     }
     
     function getFavoriteStatus(postId) {
@@ -72,6 +125,12 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.classList.toggle('favorited');
         });
         
+        // Postun favori durumunu güncelle
+        const postIndex = posts.findIndex(post => post.id === postId);
+        if (postIndex !== -1) {
+            posts[postIndex].isFavorite = !posts[postIndex].isFavorite;
+        }
+        
         // Eğer favori filtresi aktifse, listeyi yeniden render et
         if (currentFilter === 'favorites') {
             applyFilters();
@@ -96,9 +155,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="blog-excerpt">${post.excerpt}</p>
                     <div class="blog-meta">
                         <span class="blog-date"><i class="far fa-calendar-alt"></i> ${post.date}</span>
-                        <button class="favorite-btn ${post.isFavorite ? 'favorited' : ''}" data-id="${post.id}" aria-label="${post.isFavorite ? 'Favorilerden çıkar' : 'Favorilere ekle'}">
-                            <i class="fas fa-heart"></i>
-                        </button>
+                        <div class="blog-actions">
+                            <a href="${post.source}" class="read-more" target="_blank">Devamını Oku</a>
+                            <button class="favorite-btn ${post.isFavorite ? 'favorited' : ''}" data-id="${post.id}" aria-label="${post.isFavorite ? 'Favorilerden çıkar' : 'Favorilere ekle'}">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             `;
