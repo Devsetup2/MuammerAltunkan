@@ -34,6 +34,28 @@ body {
     background-color: var(--bg-color);
     transition: var(--transition);
 }
+.blog-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.read-more {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.read-more:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+[data-theme="dark"] .read-more:hover {
+    background-color: rgba(62, 166, 255, 0.1);
+}
 
 .container {
     width: 100%;
