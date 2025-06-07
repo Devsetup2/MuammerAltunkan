@@ -1,281 +1,179 @@
-/*
-	Multiverse by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
-
-(function($) {
-
-	var	$window = $(window),
-		$body = $('body'),
-		$wrapper = $('#wrapper');
-
-	// Breakpoints.
-		breakpoints({
-			xlarge:  [ '1281px',  '1680px' ],
-			large:   [ '981px',   '1280px' ],
-			medium:  [ '737px',   '980px'  ],
-			small:   [ '481px',   '736px'  ],
-			xsmall:  [ null,      '480px'  ]
-		});
-
-	// Hack: Enable IE workarounds.
-		if (browser.name == 'ie')
-			$body.addClass('ie');
-
-	// Touch?
-		if (browser.mobile)
-			$body.addClass('touch');
-
-	// Transitions supported?
-		if (browser.canUse('transition')) {
-
-			// Play initial animations on page load.
-				$window.on('load', function() {
-					window.setTimeout(function() {
-						$body.removeClass('is-preload');
-					}, 100);
-				});
-
-			// Prevent transitions/animations on resize.
-				var resizeTimeout;
-
-				$window.on('resize', function() {
-
-					window.clearTimeout(resizeTimeout);
-
-					$body.addClass('is-resizing');
-
-					resizeTimeout = window.setTimeout(function() {
-						$body.removeClass('is-resizing');
-					}, 100);
-
-				});
-
-		}
-
-	// Scroll back to top.
-		$window.scrollTop(0);
-
-	// Panels.
-		var $panels = $('.panel');
-
-		$panels.each(function() {
-
-			var $this = $(this),
-				$toggles = $('[href="#' + $this.attr('id') + '"]'),
-				$closer = $('<div class="closer" />').appendTo($this);
-
-			// Closer.
-				$closer
-					.on('click', function(event) {
-						$this.trigger('---hide');
-					});
-
-			// Events.
-				$this
-					.on('click', function(event) {
-						event.stopPropagation();
-					})
-					.on('---toggle', function() {
-
-						if ($this.hasClass('active'))
-							$this.triggerHandler('---hide');
-						else
-							$this.triggerHandler('---show');
-
-					})
-					.on('---show', function() {
-
-						// Hide other content.
-							if ($body.hasClass('content-active'))
-								$panels.trigger('---hide');
-
-						// Activate content, toggles.
-							$this.addClass('active');
-							$toggles.addClass('active');
-
-						// Activate body.
-							$body.addClass('content-active');
-
-					})
-					.on('---hide', function() {
-
-						// Deactivate content, toggles.
-							$this.removeClass('active');
-							$toggles.removeClass('active');
-
-						// Deactivate body.
-							$body.removeClass('content-active');
-
-					});
-
-			// Toggles.
-				$toggles
-					.removeAttr('href')
-					.css('cursor', 'pointer')
-					.on('click', function(event) {
-
-						event.preventDefault();
-						event.stopPropagation();
-
-						$this.trigger('---toggle');
-
-					});
-
-		});
-
-		// Global events.
-			$body
-				.on('click', function(event) {
-
-					if ($body.hasClass('content-active')) {
-
-						event.preventDefault();
-						event.stopPropagation();
-
-						$panels.trigger('---hide');
-
-					}
-
-				});
-
-			$window
-				.on('keyup', function(event) {
-
-					if (event.keyCode == 27
-					&&	$body.hasClass('content-active')) {
-
-						event.preventDefault();
-						event.stopPropagation();
-
-						$panels.trigger('---hide');
-
-					}
-
-				});
-
-	// Header.
-		var $header = $('#header');
-
-		// Links.
-			$header.find('a').each(function() {
-
-				var $this = $(this),
-					href = $this.attr('href');
-
-				// Internal link? Skip.
-					if (!href
-					||	href.charAt(0) == '#')
-						return;
-
-				// Redirect on click.
-					$this
-						.removeAttr('href')
-						.css('cursor', 'pointer')
-						.on('click', function(event) {
-
-							event.preventDefault();
-							event.stopPropagation();
-
-							window.location.href = href;
-
-						});
-
-			});
-
-	// Footer.
-		var $footer = $('#footer');
-
-		// Copyright.
-		// This basically just moves the copyright line to the end of the *last* sibling of its current parent
-		// when the "medium" breakpoint activates, and moves it back when it deactivates.
-			$footer.find('.copyright').each(function() {
-
-				var $this = $(this),
-					$parent = $this.parent(),
-					$lastParent = $parent.parent().children().last();
-
-				breakpoints.on('<=medium', function() {
-					$this.appendTo($lastParent);
-				});
-
-				breakpoints.on('>medium', function() {
-					$this.appendTo($parent);
-				});
-
-			});
-
-	// Main.
-		var $main = $('#main');
-
-		// Thumbs.
-			$main.children('.thumb').each(function() {
-
-				var	$this = $(this),
-					$image = $this.find('.image'), $image_img = $image.children('img'),
-					x;
-
-				// No image? Bail.
-					if ($image.length == 0)
-						return;
-
-				// Image.
-				// This sets the background of the "image" <span> to the image pointed to by its child
-				// <img> (which is then hidden). Gives us way more flexibility.
-
-					// Set background.
-						$image.css('background-image', 'url(' + $image_img.attr('src') + ')');
-
-					// Set background position.
-						if (x = $image_img.data('position'))
-							$image.css('background-position', x);
-
-					// Hide original img.
-						$image_img.hide();
-
-			});
-
-		// Poptrox.
-			$main.poptrox({
-				baseZIndex: 20000,
-				caption: function($a) {
-
-					var s = '';
-
-					$a.nextAll().each(function() {
-						s += this.outerHTML;
-					});
-
-					return s;
-
-				},
-				fadeSpeed: 300,
-				onPopupClose: function() { $body.removeClass('modal-active'); },
-				onPopupOpen: function() { $body.addClass('modal-active'); },
-				overlayOpacity: 0,
-				popupCloserText: '',
-				popupHeight: 150,
-				popupLoaderText: '',
-				popupSpeed: 300,
-				popupWidth: 150,
-				selector: '.thumb > a.image',
-				usePopupCaption: true,
-				usePopupCloser: true,
-				usePopupDefaultStyling: false,
-				usePopupForceClose: true,
-				usePopupLoader: true,
-				usePopupNav: true,
-				windowMargin: 50
-			});
-
-			// Hack: Set margins to 0 when 'xsmall' activates.
-				breakpoints.on('<=xsmall', function() {
-					$main[0]._poptrox.windowMargin = 0;
-				});
-
-				breakpoints.on('>xsmall', function() {
-					$main[0]._poptrox.windowMargin = 50;
-				});
-
-})(jQuery);
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM Elements
+    const themeToggle = document.getElementById('theme-toggle');
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const searchInput = document.getElementById('search-input');
+    const searchButton = document.getElementById('search-button');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const blogPostsContainer = document.getElementById('blog-posts');
+    
+    // State
+    let posts = [];
+    let filteredPosts = [];
+    let currentFilter = 'all';
+    let searchQuery = '';
+    
+    // Initialize the app
+    initTheme();
+    fetchBlogPosts();
+    setupEventListeners();
+    
+    function initTheme() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+    }
+    
+    function updateThemeIcon(theme) {
+        const icon = themeToggle.querySelector('i');
+        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+    
+    async function fetchBlogPosts() {
+        try {
+            // Burada gerçek bir API endpoint'i kullanabilirsiniz
+            // Örnek olarak local bir JSON dosyası kullanıyorum
+            const response = await fetch('posts.json');
+            posts = await response.json();
+            
+            // Her post için favori durumunu yükle
+            posts.forEach(post => {
+                post.isFavorite = getFavoriteStatus(post.id);
+            });
+            
+            renderPosts(posts);
+        } catch (error) {
+            console.error('Error fetching blog posts:', error);
+            blogPostsContainer.innerHTML = '<div class="no-results">Gönderiler yüklenirken bir hata oluştu.</div>';
+        }
+    }
+    
+    function getFavoriteStatus(postId) {
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        return favorites.includes(postId);
+    }
+    
+    function toggleFavorite(postId) {
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const index = favorites.indexOf(postId);
+        
+        if (index === -1) {
+            favorites.push(postId);
+        } else {
+            favorites.splice(index, 1);
+        }
+        
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        
+        // UI'ı güncelle
+        const favoriteButtons = document.querySelectorAll(`.favorite-btn[data-id="${postId}"]`);
+        favoriteButtons.forEach(btn => {
+            btn.classList.toggle('favorited');
+        });
+        
+        // Eğer favori filtresi aktifse, listeyi yeniden render et
+        if (currentFilter === 'favorites') {
+            applyFilters();
+        }
+    }
+    
+    function renderPosts(postsToRender) {
+        if (postsToRender.length === 0) {
+            blogPostsContainer.innerHTML = '<div class="no-results">Sonuç bulunamadı.</div>';
+            return;
+        }
+        
+        blogPostsContainer.innerHTML = '';
+        
+        postsToRender.forEach(post => {
+            const postElement = document.createElement('article');
+            postElement.className = 'blog-card';
+            postElement.innerHTML = `
+                <img src="${post.image}" alt="${post.title}" class="blog-image">
+                <div class="blog-content">
+                    <h2 class="blog-title">${post.title}</h2>
+                    <p class="blog-excerpt">${post.excerpt}</p>
+                    <div class="blog-meta">
+                        <span class="blog-date"><i class="far fa-calendar-alt"></i> ${post.date}</span>
+                        <button class="favorite-btn ${post.isFavorite ? 'favorited' : ''}" data-id="${post.id}" aria-label="${post.isFavorite ? 'Favorilerden çıkar' : 'Favorilere ekle'}">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            blogPostsContainer.appendChild(postElement);
+        });
+        
+        // Favori butonlarına event listener ekle
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const postId = parseInt(this.getAttribute('data-id'));
+                toggleFavorite(postId);
+            });
+        });
+    }
+    
+    function applyFilters() {
+        filteredPosts = [...posts];
+        
+        // Filtre uygula
+        if (currentFilter === 'favorites') {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            filteredPosts = filteredPosts.filter(post => favorites.includes(post.id));
+        }
+        
+        // Arama sorgusunu uygula
+        if (searchQuery) {
+            const query = searchQuery.toLowerCase();
+            filteredPosts = filteredPosts.filter(post => 
+                post.title.toLowerCase().includes(query) || 
+                post.excerpt.toLowerCase().includes(query) ||
+                post.content.toLowerCase().includes(query)
+            );
+        }
+        
+        renderPosts(filteredPosts);
+    }
+    
+    function setupEventListeners() {
+        // Tema değiştirme butonu
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        // Mobil menü butonu
+        mobileMenuToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('active');
+        });
+        
+        // Filtre butonları
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.getAttribute('data-filter');
+                applyFilters();
+            });
+        });
+        
+        // Arama butonu
+        searchButton.addEventListener('click', function() {
+            searchQuery = searchInput.value.trim();
+            applyFilters();
+        });
+        
+        // Arama input'unda Enter tuşu
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                searchQuery = searchInput.value.trim();
+                applyFilters();
+            }
+        });
+    }
+});
