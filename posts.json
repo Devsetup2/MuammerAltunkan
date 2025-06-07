@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "title": "JavaScript'te Asenkron Programlama",
+        "excerpt": "JavaScript'te callback, promise ve async/await kullanımını öğrenin.",
+        "content": "Bu makalede JavaScript'te asenkron programlamanın temellerini ele alacağız...",
+        "image": "https://source.unsplash.com/random/600x400/?javascript",
+        "date": "15 Haziran 2025",
+        "category": "JavaScript"
+    },
+    {
+        "id": 2,
+        "title": "CSS Grid ile Modern Layout'lar",
+        "excerpt": "CSS Grid kullanarak responsive ve modern web sayfaları oluşturun.",
+        "content": "CSS Grid, web sayfalarında karmaşık layout'lar oluşturmak için güçlü bir araçtır...",
+        "image": "https://source.unsplash.com/random/600x400/?css",
+        "date": "10 Haziran 2025",
+        "category": "CSS"
+    },
+    {
+        "id": 3,
+        "title": "React Hooks Kullanım Rehberi",
+        "excerpt": "React Hooks'ları kullanarak fonksiyonel bileşenler oluşturmayı öğrenin.",
+        "content": "React Hooks, fonksiyonel bileşenlerde state ve lifecycle özelliklerini kullanmamızı sağlar...",
+        "image": "https://source.unsplash.com/random/600x400/?react",
+        "date": "5 Haziran 2025",
+        "category": "React"
+    },
+    {
+        "id": 4,
+        "title": "Web Performans Optimizasyonu",
+        "excerpt": "Web sitenizin yüklenme hızını artırmak için ipuçları ve teknikler.",
+        "content": "Web performansı, kullanıcı deneyimini doğrudan etkileyen kritik bir faktördür...",
+        "image": "https://source.unsplash.com/random/600x400/?speed",
+        "date": "1 Haziran 2025",
+        "category": "Performance"
+    },
+    {
+        "id": 5,
+        "title": "Node.js ile REST API Geliştirme",
+        "excerpt": "Express.js kullanarak Node.js'de RESTful API nasıl oluşturulur?",
+        "content": "Node.js, sunucu tarafında JavaScript kullanarak hızlı ve ölçeklenebilir uygulamalar oluşturmamızı sağlar...",
+        "image": "https://source.unsplash.com/random/600x400/?nodejs",
+        "date": "25 Mayıs 2025",
+        "category": "Node.js"
+    },
+    {
+        "id": 6,
+        "title": "Git ve GitHub Kullanımı",
+        "excerpt": "Versiyon kontrol sistemi Git ve GitHub kullanımına giriş.",
+        "content": "Git, yazılım geliştirme süreçlerinde versiyon kontrolü için kullanılan popüler bir araçtır...",
+        "image": "https://source.unsplash.com/random/600x400/?github",
+        "date": "20 Mayıs 2025",
+        "category": "Git"
+    }
+]
