@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
             image: "https://pbs.twimg.com/card_img/1931354427559903232/WbNIJnaD?format=jpg&name=large",
             date: "8 Haziran 2025",
             category: "Science",
-            source: ""
+            source: "braincells.html"
         },
         {
             id: 2,
