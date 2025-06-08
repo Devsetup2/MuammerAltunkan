@@ -12,13 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const posts = [
         {
             id: 1,
-            title: "JavaScript'te Asenkron Programlama",
-            excerpt: "JavaScript'te callback, promise ve async/await kullanımını öğrenin.",
-            content: "Bu makalede JavaScript'te asenkron programlamanın temellerini ele alacağız...",
-            image: "https://source.unsplash.com/random/600x400/?javascript",
-            date: "15 Haziran 2023",
-            category: "JavaScript",
-            source: "https://example.com/javascript-asenkron-programlama"
+            title: "biological computer powered by human brain cells",
+            excerpt: "biological computer powered by human brain cells CL1",
+            content: "Science biological computer powered by human brain cells CL1 ",
+            image: "https://pbs.twimg.com/card_img/1931354427559903232/WbNIJnaD?format=jpg&name=large",
+            date: "8 Haziran 2025",
+            category: "Science",
+            source: ""
         },
         {
             id: 2,
