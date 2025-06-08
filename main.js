@@ -22,13 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         {
             id: 2,
-            title: "CSS Grid ile Modern Layout'lar",
-            excerpt: "CSS Grid kullanarak responsive ve modern web sayfaları oluşturun.",
-            content: "CSS Grid, web sayfalarında karmaşık layout'lar oluşturmak için güçlü bir araçtır...",
-            image: "https://source.unsplash.com/random/600x400/?css",
-            date: "10 Haziran 2023",
-            category: "CSS",
-            source: "https://example.com/css-grid-modern-layout"
+            title: "How to Make Money with Stock Analysis Using Artificial Intelligence",
+            excerpt: "stocks. Investors — from retail traders to institutional hedge funds ",
+            content: "The Rise of AI in the Stock Market",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvHJm3AiNpAq4madq1ysxBe57UJKFlP4VP_g&s",
+            date: "8 Haziran 2025",
+            category: "Stock Market",
+            source: "stockanalysis.html"
         },
         {
             id: 3,
